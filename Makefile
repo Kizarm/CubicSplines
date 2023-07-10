@@ -27,7 +27,7 @@ BOBJS = $(addprefix $(BLD),$(OBJS))
 all: $(BLD) $(PRJ).elf
 lib:
 	git clone https://github.com/bobbl/libaeabi-cortexm0.git
-	cd libaeabi-cortexm0 && $(MAKE) all && $(DEL) *.o
+	cd libaeabi-cortexm0 && $(MAKE) all && $(DEL) -r .git/* *.o .gitignore && rmdir .git
 # ... atd.
 -include $(BLD)*.d
 # linker
