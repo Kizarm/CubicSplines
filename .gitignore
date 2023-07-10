@@ -1,0 +1,14 @@
+# kdevelop
+.kde*
+*.kdev4
+
+*.elf
+*.lst
+*.map
+*.bin
+*.hex
+**/build/*
+**/debug/*
+**/html/*
+
+*/trace.log
