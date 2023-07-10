@@ -127,7 +127,16 @@ handler Vectors[] = {
   USB_IRQHandler,
 
 };
+static inline void fillStack (void) {
+  register unsigned int *dst, *end;
+  dst = &_ebss;
+  end = &_estack;
+  while (dst < end) *dst++ = 0xDEADBEEFU;
+}
 void Reset_Handler(void) {
+  
+  fillStack();
+  
   register unsigned int *src, *dst, *end;
   /* Zero fill the bss section */
   dst = &_sbss;
