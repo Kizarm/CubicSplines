@@ -8,8 +8,11 @@ uint32_t Usart::Down (const char * data, const uint32_t len) {
   uint32_t res = ::fwrite (data, 1, len, stdout);
   return res;
 }
-void Usart::SetRS485(const bool polarity) const {
+void Usart::SetRS485(const bool ) const {
 }
 
-Usart::~Usart() {
+void Usart::irq() {
 }
+void Usart::SetHalfDuplex(const bool ) const {
+}
+

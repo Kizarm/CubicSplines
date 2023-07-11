@@ -1,13 +1,5 @@
 #include "print.h"
-
-#if __arm__
-static inline void sleep (void) {
-  asm volatile ("wfi");
-}
-#else
-// unix - unused
-#define sleep()
-#endif
+#include "platform.h"
 
 static const char*    hexStr   = "0123456789ABCDEF";
 static const uint16_t numLen[] = {1, 32, 1, 11, 8, 0};

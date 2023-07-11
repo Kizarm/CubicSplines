@@ -2,15 +2,6 @@
 #define BASELAYER_H
 #include <stdint.h>
 
-#ifdef __arm__
-#define debug(...)
-#else  // ARCH_CM0
-#ifdef DEBUG
-#define debug printf
-#else  // DEBUG
-#define debug(...)
-#endif // DEBUG
-#endif // ARCH_CM0
 /** @brief Bázová třída pro stack trochu obecnějšího komunikačního protokolu.
  *
  * @class BaseLayer

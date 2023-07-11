@@ -7,9 +7,7 @@ LD   = $(PREFIX)g++
 SIZE = $(PREFIX)size
 DUMP = $(PREFIX)objdump
 COPY = $(PREFIX)objcopy
-CFLAGS+= -Os
+CFLAGS+= -Os -I./unix
 
 LDLIBS+= -lpthread
 VPATH += ./unix
-
-

@@ -7,7 +7,7 @@ LD   = $(PREFIX)g++
 SIZE = $(PREFIX)size
 DUMP = $(PREFIX)objdump
 COPY = $(PREFIX)objcopy
-CFLAGS+= -Os
+CFLAGS+= -Os -I./stm32f051
 
 CCPU   = -mcpu=cortex-m0
 MCPU   = -mthumb $(CCPU)

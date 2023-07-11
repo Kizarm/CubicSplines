@@ -13,12 +13,9 @@ class Usart : public BaseLayer {
     explicit Usart (const uint32_t baud = 9600) noexcept;
     uint32_t Down  (const char * data, const uint32_t len) override;
     void SetRS485  (const bool polarity) const;
-#ifdef __arm__
+    
     void irq            (void);
     void SetHalfDuplex  (const bool on) const;
-#else
-    virtual ~Usart ();
-#endif
 };
 
 #endif // USART_H

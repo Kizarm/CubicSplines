@@ -7,7 +7,7 @@ SIZE = llvm-size
 DUMP = llvm-objdump
 COPY = llvm-objcopy
 
-CFLAGS+= -Oz
+CFLAGS+= -Oz -I./unix
 LDLIBS+= -lpthread
 VPATH += ./unix
 #OBJS +=
