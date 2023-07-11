@@ -73,17 +73,17 @@ int main () {
     mArray [t] = y;                       // a ulož jí do toho pole
   }
   // celé pole vypíšeme na terminál
-  console << "        ";
+  console << SEPARATOR;
   for (int i=0; i<10; i++) {
-    console << "          " << i;           // v prvním řádku jednotky
+    console << SEPARATOR << i;            // v prvním řádku jednotky
   }
   console << EOL;
   const int m = len / 10;
   for (int i=0; i<m; i++) {
-    console << from_int(i * 10) << " : ";   // následují desítky oddělené dvojtečkou
+    console << from_int(i * 10) << " : "; // následují desítky oddělené dvojtečkou
     for (int j=0; j<10; j++) {
       const int n = 10 * i + j;
-      console << mArray [n] << " ";         // a jednotlivé interpolované hodnoty
+      console << mArray [n] << " ";       // a jednotlivé interpolované hodnoty
     }
     console << EOL;
   }

@@ -45,6 +45,7 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
  
   -# @ref secTypeControl
   -# @ref secCPPmain
+  -# @ref secNameSpaces
   -# @ref secConstructDestruct
   -# @ref secReferences
   -# @ref secVirtualMethods
@@ -67,7 +68,7 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
      se stejnou syntaxí jako v čistém C, je však lepší používat static_cast, const_cast, reinterpret_cast.
      Pak je na první pohled patrné, že programátor snad ví, co dělá, dá se to lépe dohledat.
      
-     Jde to dotáhnout o něco dále, zapouzdřit si vhodný celočíselný typ do extra třídy (nazvěme jí např. @ref real),
+     Jde to dotáhnout o něco dále, zapouzdřit si vhodný celočíselný typ do extra třídy (nazvěme jí např. @ref FIX::real),
      vytvořit si potřebné konstruktory, přetížit všechny potřebné operátory (ale je jich fakt moc) a případná
      přetečení ošetřit přímo na místě. Eliminují se tak automatické konverze. Oni to takhle měli patrně u té Ariane 5
      uděláno, ale pro větší efektivitu kontroly prostě vypnuli. Programování bývá o kompromisu, ale nesmí se to přehánět.
@@ -99,6 +100,17 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
      což je v čistém C považováno za nežádoucí, ale na druhou stranu metody definované už v hlavičce jsou
      automaticky inline, kód se tak o něco zrychlí.
      
+@section secNameSpaces Jmenné prostory.
+     V takto malém projektu je poměrně těžké najít smysluplné využití. Tady se pomocí jmenných prostorů pokusím trochu
+     suplovat preprocesor. Výpočty byly původně napsány obecně pro aritmetický typ real. Co tento typ představuje
+     je dodatečně definováno v hlavičkách real_fix.h a real_flt.h a prostým include jedné z nich se dalo
+     vybrat, zda to bude řešeno v pevné nebo pohyblivé řádové čárce. V C++ lze celý obsah hlavičky obalit
+     jmenným prostorem a vložit je do zdrojáků obě. Zůstane jediný bod ve kterém je možné udělat výběr :
+     @snippet common/print.h NameSpaceExample
+     Jasně, nic moc to nepřináší, ale funguje to. Jmenné prostory oceníme v knihovnách a rozsáhlých projektech,
+     tady je to opravdu zbytečné, něco jsem sem dát musel, protože jmenné prostory v čistém C nejsou a
+     tohle má alespoň nějaký smysl. A takto se to normálně nepoužívá.
+
 @section secConstructDestruct Konstruktory a destruktory.
      Patří k zapouzdření tak nějak přirozeně. V čistém C docházelo k neočekávaným chybám tím, že programátor
      prostě někde zapomněl inicializovat nějakou proměnnou. Prostě očekával, že v paměti je nula a ona tam
@@ -168,12 +180,29 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
      se to dalo úplně všechno do jedné funkce - callbacku, hodně by tím však utrpěla možnost znovupoužití tohoto kódu.
      Opět není generován žádný zbytečný kód navíc, uvádí se, že pokud takto používáme dědičnost a virtuální metody,
      překladač vyneruje navíc tabulku VTABLE, ale pokud jsou metody takhle jednoduché a definované přímo v hlavičce,
-     jsou inline a nepřekáží.
+     jsou inline a nepřekáží. Možná tam nějaká tabulka VTABLE bude, možná nebude, protože překladač v takto jednoduchém
+     případě dynamickou vazbu nepotřebuje, celá problematika do všech detailů jak to
+     přesně funguje je složitá, ale celkem není potřeba tomu rozumět až na dřeň. Stejně je to tak se vším,
+     málokdo chápe matematický aparát kvantové elektrodynamiky do té míry aby dokázal posoudit zda symetrie
+     U1(loc) opravdu generuje zákon zachování elektrického náboje, ale učíme se už na střední škole, že to tak
+     je a není důvod tomu nevěřit. A že je Země kulatá, je též jen otázka víry.
      
      Co by bylo trochu problematické je chod dat v opačném směru, příjem dat Usartem. Metoda Up() by se pak volala
      v přerušení a v něm by pak probíhala celá obsluha protokolového stacku. Ne, že by to nešlo, já mám mnoho prográmků, kdy
      se celá práce děje v přerušení, v main smyčce se jen uspává jádro, ale tam se většinou používá DMA.
      Prostě musí se nad tím trochu přemýšlet.
+     
+     Nakonec je třeba se krátce zmínit o abstraktních bázových třídách. V projektu to použito není a udělat na
+     to jednoduchý a přehledný příklad prostě nejde. Pokud napíšeme něco jako
+     @snippet unix/ledblinkingtest.cpp AbstactInterfaceExample
+     máme abstraktní bázovou třídu (strukturu AbstactInterface, je to jedno). Zde obsahuje jen jedinou metodu Send(),
+     důležité je to = 0 na konci. To značí čistou virtuální metodu (pure virtual) a pokud třída obsahuje jen
+     jedinou takovou metodu, je překladačem považována za abstraktní a nemůžeme pak vytvořit její instanci.
+     Pokud takovou třídu zdědíme, pak musíme čistě abstraktní metodu přetížit, tj. vytvořit její tělo.
+     V čistém C je to něco jako callback funkce - tady lze zapomenout tento callback nastavit, což pak končí
+     chybou. V C++ to nejde, překladač nás s tím vyhodí. Je to hodně zjednodušeně řečeno, ale podrobnosti nejsou
+     zase tak podstatné. Opět bych odkázal na Eckela, jeho dvojdílná bichle "Myslíme v jazyce C++" je
+     dostatečně podrobná, aby každého přešla chuť se C++ naučit.
      
 @section secOverloading Přetěžování funkcí, operátory.
      Užitečné, hlavně pro rekurzívní volání. V čistém C nemůžou mít funkce stejná jména i když mají jiné parametry.
@@ -183,7 +212,7 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
      Příklad.
      @snippet common/print.h OperatorOverloadExample
      Operátor << je snad nejčastěji přetěžovaný, naznačuje něco jako "výstup", ale v těchto zdrojácích se běžně
-     přetěžují i ostatní operátory - třeba pro aritmetické operace. Třída @ref real tedy může simulovat aritmetiku
+     přetěžují i ostatní operátory - třeba pro aritmetické operace. Třída real tedy může simulovat aritmetiku
      v pevné řádové čárce nebo může fungovat jako běžné float číslo. Za zmínku stojí, že operátory běžně vracejí
      odkaz na třídu (resp. instanci), ze které jsou volány (this), což umožňuje jejich řetězení (to je při zápisu
      aritmetických výrazů běžné).
@@ -195,7 +224,8 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
      která má 2 parametry - typ T ukládaného objektu a M (implicitně 64) celé číslo udávající počet ukládaných prvků.
      Tak je možné vytvářet instance staticky, není potřeba používat haldu. Za zmínku stojí konstruktor
      @snippet common/fifo.h TemplateExampleConstr
-     a v něm static_assert(). To také v C nejde. Při překladu to kontroluje, zda M není blbost a vcelku zadarmo.
+     a v něm static_assert(). Výraz ve static_assert() musí být constexpr, je to kontrola za překladu.
+     To také v C nejde. Při překladu to kontroluje, zda M není blbost a vcelku zadarmo.
      Atomičnost operací zde rozebírat nebudu, ale když už jsme u šablon nelze nezmínit STL, čili Standard Template Library.
      Ta není moc použitelná v bare-metal, prvky jako std::string, std::vector jsou nenažrané a používají haldu,
      ale třeba std::atomic na Cortex-M3/4 lze použít s výhodou, používají instrukce LDREX, STREX, takže nezastavují
@@ -216,6 +246,12 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
      externí knihovnou (python je na to velmi dobrý, má knihovny na všechny možné interpolační funkce).
      Normální člověk použije lineární interpolaci, stačí mu na to obyčejná trojčlenka. Sice musí mít pro požadovanou
      přesnost řádově větší tabulku koeficientů, ale většinou to nevadí.
+     
+     Celkem to není nic nového, i v čistém C, pokud použijeme trochu agresívnější optimalizaci, jednoduché
+     funkce jejichž argumentem je číslo jako literál většinou vyprodukují při překladu rovnou výsledek. Tady
+     je to jen dotaženo jen o něco dál. Obecně je dobré označit <b>úplně</b> všechno, co takto označit jen trochu
+     jde jako const. Jednak to usnadní život překladači a pak pokud překladač někde vyhodí chybu, je jasně
+     vidět, že jsme něco nedomysleli. Udržet v hlavě všechny vazby, které drží překladač je takřka nemožné.
      
 @section secLambdaExpr Lambda výrazy.
      Výhodou je, že to umí posbírat data z okolního kontextu a není tedy potřeba předávat
@@ -301,13 +337,13 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
         
 @section secEndOfText Závěr.
   To je zatím vše. Mělo by to mít nějakou licenci, ale jako obvykle napíšu - dělejte si s tím co chcete,
-  ale neobtěžujte mě s tím, že to nefunguje. Jsou to poznatky nasbírané za několik let ne příliš usilovného
-  snažení, takže hodně neúplné, určitě jsou v tom chyby. Nástroj scan-build sice žádnou neodhalil,
-  to však ještě nic neznamená.
+  ale neobtěžujte mě s tím, že to nefunguje (nejblíž je asi MIT). Jsou to poznatky nasbírané za několik
+  let ne příliš usilovného snažení, takže hodně neúplné, určitě jsou v tom chyby. Nástroj scan-build
+  sice žádnou neodhalil, to však ještě nic neznamená.
 
 */
 #include "ledblinkingtest.h"
 #include "usart.h"
-#include "print.h"
-#include "spline.h"
+#include "print.h"    // pořadí je zde důležité, nebo by se musely hlavičky přeuspořádat
+#include "spline.h"   // TODO: spline používá cosi z print.h
 #endif // MAIN_H

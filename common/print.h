@@ -1,19 +1,22 @@
 #ifndef PRINT_H
 #define PRINT_H
 
-#include "baselayer.h"
 typedef __SIZE_TYPE__ size_t;
-#if FIXF
- #include "real_fix.h"
-#else
- #include "real_flt.h"
-#endif
+#include "baselayer.h"
+//! [NameSpaceExample]
+#include "real_fix.h"
+#include "real_flt.h"
+// Zde je možné vybrat si, zda se to bude počítat v pevné
+// nebo pohyblivé řádové čárce. Pro Cortex-M0 stačí pevná, je to de facto int32_t.
+   using namespace FIX;
+// using namespace FLT;
+//! [NameSpaceExample]
 
 constexpr const char * EOL = "\r\n";
 constexpr unsigned  BUFLEN = 64;
 
 /**
- * @file
+ * @file print.h
  * @class Print
  * @brief Něco jako ostream.
  * 

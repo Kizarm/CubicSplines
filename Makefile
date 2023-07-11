@@ -13,7 +13,6 @@ LDLIBS =
 BFLAGS = --strip-unneeded
 
 CFLAGS = -MMD -Wall -g -fno-exceptions -ffunction-sections -fdata-sections -fshort-enums
-CFLAGS+= -DFIXF=1
 CFLAGS+= -I. -I./common
 DEL    = rm -f
 

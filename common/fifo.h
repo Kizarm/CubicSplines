@@ -14,6 +14,8 @@ static constexpr bool isValidM (const int N, const dbus_w_t M) {
   // constexpr má raději rekurzi než cyklus (c++11)
   return (N > 12) ? false : (((1u << N) == M) ? true : isValidM (N+1, M));
 }
+//! [TemplateExampleDef]
+//! @file fifo.h
 /** @class FIFO
  *  @brief Jednoduchá fronta (kruhový buffer).
  * 
@@ -34,7 +36,6 @@ static constexpr bool isValidM (const int N, const dbus_w_t M) {
  * musí to být mocnina dvou v rozsahu 8 až 4096, default je 64. Mocnina 2 je zvolena proto,
  * aby se místo zbytku po dělení mohl použít jen bitový and, což je rychlejší.
  * */
-//! [TemplateExampleDef]
 template<typename T, const dbus_w_t M = 64> class FIFO {
   T m_data [M];
   volatile dbus_w_t m_head;   //!< index pro zápis (hlava)

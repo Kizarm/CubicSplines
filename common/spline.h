@@ -42,6 +42,7 @@ template<const int N> class SPLINE {
   SplineSet data [N - 1];   // zde jsou schovány koeficienty (privátně)
   public:
 //! [CubicSplinesComputeCoefficients]
+    //! Konstruktor
     explicit constexpr SPLINE (const Pair * const p, const bool reverse = false) noexcept {
       double x [N], y [N];  // přeskupení dat - možnost inverzní funkce při reverse = true
       if (reverse) {for (int i=0; i<N; i++) { x[i] = p[i].y; y[i] = p[i].x; }}
@@ -90,9 +91,9 @@ template<const int N> class SPLINE {
       return cubic_poly (s, r);                            // vlastní výpočet
     }
     /***************************************************************/
+//! [IteratorExampleDef]
     /** @class iterator
      *  @brief pro range-based for () */
-//! [IteratorExampleDef]
     class iterator {
       const SplineSet * ptr;
       public:
