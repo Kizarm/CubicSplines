@@ -62,6 +62,7 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
      -# @ref subDecorators6
      -# @ref subDecorators7
      -# @ref subDecorators8
+     -# @ref subDecorators9
   -# @ref secEndOfText
           
 @section secTypeControl Typová kontrola.
@@ -352,6 +353,8 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
      operátory || lze zapsat jako or, && jako and, ! jako not, údajně se to lépe píše. Jsou to pak klíčová slova jazyka.
   @subsection subDecorators8 Typ výčtu
      viz @ref secLambdaExpr, ale nepoužívám, stejně jako enum class, důvod je tam uveden.
+  @subsection subDecorators9 Proměnný počet parametrů
+     viz @ref subDecorators3
         
 @section secEndOfText Závěr.
   To je zatím vše. Mělo by to mít nějakou licenci, ale jako obvykle napíšu - dělejte si s tím co chcete,
