@@ -57,7 +57,9 @@ namespace FIX {
     real operator* (const real & r) const {
       const int64_t res = (int64_t)(x) * (int64_t)(r.x);
       // Přeteče to nejspíš tady, součet není tak kritický ale i to by se mělo ošetřit.
+//! [ReplaceLogOperators]
       if ((res > INT48MAX) or (res < INT48MIN)) Overflow ();
+//! [ReplaceLogOperators]
       // Násobení musí udělat posun doprava aby to sedělo.
       return real ((int) (res >> SHIFT));
     }

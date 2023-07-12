@@ -5,7 +5,7 @@
 @mainpage Kubické splajny aneb Výhody C++ proti čistému C v bare-metal.
 
  Na jednoduchých příkladech se zde pokusím ukázat, že použít jazyk C++ může
- být o něco efektivnější než psát to v čistém C. Většína "vychytávek" pochází
+ být o něco efektivnější než psát to v čistém C. Většina "vychytávek" pochází
  až z moderního rozšíření C++11, použity jsou i konstrukce C++14. Kód bude
  kompletní příklad pro architekturu STM32F051, sice nedělá nic užitečného,
  ale měl by alespoň fungovat. No nic užitečného. Je to celkem kompletní příklad
@@ -57,6 +57,11 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
      -# @ref subDecorators1
      -# @ref subDecorators2
      -# @ref subDecorators3
+     -# @ref subDecorators4
+     -# @ref subDecorators5
+     -# @ref subDecorators6
+     -# @ref subDecorators7
+     -# @ref subDecorators8
   -# @ref secEndOfText
           
 @section secTypeControl Typová kontrola.
@@ -299,7 +304,7 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
         Ale tohle se dá s výhodou použít naopak pro assembler vestavěný v C++ - asm (R"---(text)---");.
         Blok je pak daleko přehlednější, nemusí v něm být ty podivné escape sekvence.
 
-  @subsection subDecorators2 User-defined literals
+  @subsection subDecorators2 User-defined Literals
      hodně divná věc, dají se s tím dělat celkem kouzla jako zapisovat čísla v libovolné číselné soustavě atd.
   
         Příklad.
@@ -334,6 +339,19 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
         je k tomu potřeba ještě dodefinovat iterátory begin a end
         @snippet common/spline.h IteratorExampleDef
         což sice není žádná věda, ale zdržuje to.
+        
+  @subsection subDecorators4 Static_assert
+     v textu @ref secTemplates
+  @subsection subDecorators5 Automaticky odvozené typy
+     z C++14, v textu např. @ref secLambdaExpr Typ auto má v C jiný význam. Já to sice používám,
+     ale jen z lenosti, protože u jazyka s typovou kontrolou má být typ zřejmý.
+  @subsection subDecorators6 Defaultní parametry
+     v textu @ref subDecorators2
+  @subsection subDecorators7 Odlišná syntaxe logických operátorů
+     @snippet common/real_fix.h ReplaceLogOperators
+     operátory || lze zapsat jako or, && jako and, ! jako not, údajně se to lépe píše. Jsou to pak klíčová slova jazyka.
+  @subsection subDecorators8 Typ výčtu
+     viz @ref secLambdaExpr, ale nepoužívám, stejně jako enum class, důvod je tam uveden.
         
 @section secEndOfText Závěr.
   To je zatím vše. Mělo by to mít nějakou licenci, ale jako obvykle napíšu - dělejte si s tím co chcete,
