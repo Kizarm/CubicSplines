@@ -53,6 +53,7 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
   -# @ref secTemplates
   -# @ref secConstexpr
   -# @ref secLambdaExpr
+  -# @ref HiddenImpl
   -# @ref secDecorators
      -# @ref subDecorators1
      -# @ref subDecorators2
@@ -165,6 +166,9 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
      její instance usart. Nad ní je jediná další vrstva, třída Print, resp. její instance console. Obě tyto
      třídy dědí z třídy BaseLayer a pro jednoduchost si představme, že data jsou vytvářena (výpočtem) v hlavní smyčce programu
      třídou Print, resp. její metodou BlockDown, všechno co je potřeba lze celkem snadno do ní svést.
+     <i>Ve skutečnosti je to o něco složitější, usart je instance třídy HardwareOutput, ale princip zůstává.
+     Podrobněji je to popsáno v @ref HiddenImpl.
+     </i>
      
      První co uděláme, je spojení instancí jmenovaných tříd
      @snippet main.cpp ConnectionStack
@@ -295,6 +299,17 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
      warningy, a ty nejdou vypnout. Je těžké říct jestli je to chyba nebo vlastnost.
      Nicméně používání výčtů je velmi užitečné, dost to omezí možnost přiřadit do proměnné úplnou blbost.
      
+@section HiddenImpl Skrytá implementace.
+     Pokud není dopředu známo jak přesně bude funkcionalita implementována nebo se pak může v jednotlivostech
+     lišit pro různé platformy, případně chceme podrobnosti skrýt v hlavičce lze udělat něco jako obal
+     obsahující jen jakousi strukturu PrivateData a potřebné metody
+     @snippet common/hardwareoutput.h HiddenImplemntationExampleDecl
+     a pak tyto podrobnosti implementovat a to různě - zde trochu složitěji pro USB
+     @snippet stm32l4x2/hardwareoutput.cpp HiddenImplemntationExampleImpl
+     nebo úplně jednoduše pro Linux
+     @snippet unix/hardwareoutput.cpp HiddenImplemntationExampleUnix
+     Normálně se používá pro privátní data halda, zde je to statická instance, princip je stejný.
+     
 @section secDecorators Ostatní dekorace.
   @subsection subDecorators1 Raw String Literal
      velmi užitečné, v čistém C není (zřejmě pochází z pythonu).
@@ -364,7 +379,7 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
 
 */
 #include "ledblinkingtest.h"
-#include "usart.h"
+#include "hardwareoutput.h"
 #include "print.h"    // pořadí je zde důležité, nebo by se musely hlavičky přeuspořádat
 #include "spline.h"   // TODO: spline používá cosi z print.h
 #endif // MAIN_H

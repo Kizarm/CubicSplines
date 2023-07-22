@@ -17,7 +17,7 @@ CFLAGS+= -I. -I./common
 DEL    = rm -f
 
 # zdrojaky
-OBJS   = main.o ledblinkingtest.o print.o usart.o
+OBJS   = main.o ledblinkingtest.o print.o hardwareoutput.o
 #OBJS  +=
 
 include $(TARGET)/$(TOOL).mk

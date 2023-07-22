@@ -26,5 +26,5 @@ LDLIBS+= -L./stm32f051 -T script.ld
 LDLIBS+= -L./libaeabi-cortexm0 -laeabi-cortexm0
 DFLAGS+= --triple=$(TRIP) $(CCPU)
 VPATH += ./stm32f051
-OBJS  += startup.o system.o gpio.o
+OBJS  += startup.o system.o gpio.o usart.o
 

@@ -19,9 +19,9 @@ static constexpr Pair meassure[] = {
 };
 /////////////////////////////////////////////////////////////////
 static const SPLINE<array_size (meassure)> dcs (meassure, false);
-static Print   console (DEC);
+static Print           console (DEC);
 //! [VarArgExampleDef]
-static Usart   usart   (19200);
+static HardwareOutput  usart;
 /////////////////////////////////////////////////////////////////
 //! [LoremIpsumExample]
 static constexpr const char * Intro = R"-!-(
@@ -60,7 +60,7 @@ static void printCoeficients () {
 /////////////////////////////////////////////////////////////////
 int main () {
   LedBlinkInit();
-  usart.SetRS485 (false);
+  usart.Init  ();
 //! [ConnectionStack]
   console += usart;                       // abstraktní zřetězení pomocí třídy BaseLayer
 //! [ConnectionStack]

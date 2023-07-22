@@ -16,6 +16,6 @@ LFLAGS+= $(MCPU)
 LFLAGS+= -nostartfiles
 LDLIBS+= -L./stm32f051 -T script.ld
 VPATH += ./stm32f051
-OBJS  += startup.o system.o gpio.o
+OBJS  += startup.o system.o gpio.o usart.o
 
 
