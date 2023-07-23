@@ -27,8 +27,9 @@ void Usart::irq (void) {
 extern "C" void USART1_IRQHandler (void) {
   if (Instance) Instance->irq();
 };
-
-Usart::Usart(const uint32_t baud) noexcept : tx_ring() {
+//! [MembersConstructorExample]
+Usart::Usart(const uint32_t baud) noexcept : BaseLayer(), tx_ring() {
+//! [MembersConstructorExample]
   if (Instance) return;     // Chyba - jedina instance
   Instance = this;
   // 1. Clock Enable

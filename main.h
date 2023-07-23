@@ -148,6 +148,16 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
      Je to též otázka k diskusi, já to takto používám a funguje to. Dokonce lze periferii v destruktoru přes RCC zresetovat
      a odstavit. To se hodí pro nějaké sdílené funkce nebo v low power režimech.</i>
      
+     Skoro ve všech konstruktorech příkladu se vyskytuje podobná konstrukce
+     @snippet stm32f051/usart.cpp MembersConstructorExample
+     kde za dvojtečkou je seznam konstruktorů vnitřních členů třídy. Začátečníci se na to někdy ptají. Není to nic nového
+     ani neobvyklého. Úkolem konstruktoru je inicializovat proměnné. V C++ to lze provést různými způsoby, toto je jeden
+     z nich. V seznamu se na prvním místě uvádějí třídy, ze kterých se dědí, následují všechny členské proměnné, oddělené
+     čárkou, v pořadí v jakém jsou deklarovány v hlavičce. Pokud jsou interní proměnné deklarovány jako konstantní,
+     pak to jinak ani nejde. To platí i pro reference. <i>Některé překladače to striktně nevyžadují, ale je lépe to udělat.</i>
+     Platí to i pro vestavěné typy jako je int, double, bool atd. Konstruktory se volají v pořadí, v jakém jsou v seznamu
+     uvedeny, což může mít dost podstatný význam.
+     
 @section secReferences Reference.
      Neboli odkazy jsou také něco, co není v čistém C a je to dost užitečné. A není to jen takový "lepší" zápis ukazatele.
      Začátečníka v C++ to může mást, lze si na to však zvyknout a používání se vyplatí. Překladač si
