@@ -2,6 +2,7 @@
 #define HARDWAREOUTPUT_H
 #include "baselayer.h"
 //! [HiddenImplemntationExampleDecl]
+//! @file hardwarehutput.h
 /** @class HardwareOutput
  *  @brief Skrytá implementace.
  * 
