@@ -301,7 +301,7 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
      
 @section HiddenImpl Skrytá implementace.
      Pokud není dopředu známo jak přesně bude funkcionalita implementována nebo se pak může v jednotlivostech
-     lišit pro různé platformy, případně chceme podrobnosti skrýt v hlavičce lze udělat něco jako obal
+     lišit pro různé platformy, případně chceme podrobnosti skrýt v hlavičce, lze udělat něco jako obal
      obsahující jen jakousi strukturu PrivateData a potřebné metody
      @snippet common/hardwareoutput.h HiddenImplemntationExampleDecl
      a pak tyto podrobnosti implementovat a to různě - zde trochu složitěji pro USB
@@ -309,6 +309,12 @@ size arm-none-eabi-gcc version 9.2.1 -Os :
      nebo úplně jednoduše pro Linux
      @snippet unix/hardwareoutput.cpp HiddenImplemntationExampleUnix
      Normálně se používá pro privátní data halda, zde je to statická instance, princip je stejný.
+     
+     V bare-metal, bez haldy, toto není moc názorné, ale normálně se tohle poměrně často používá,
+     zejména v knihovnách. Výhodné je, že třída nebo struktura má v hlavičce pořád stejnou velikost i uspořádání,
+     měnit se může jen interní implementace, takže pokud někdo změní implementaci v knihovně, není nutné
+     překládat znovu celý projekt, stačí jen přilinkovat novou knihovnu. Není to žádná nová vymoženost,
+     je to původní vlastnost C++, docela užitečná.
      
 @section secDecorators Ostatní dekorace.
   @subsection subDecorators1 Raw String Literal
