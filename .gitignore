@@ -10,5 +10,6 @@
 **/build/*
 **/debug/*
 **/html/*
-**/libaeabi-cortexm0/*
 */trace.log
+libaeabi-cortexm0/*.o
+libaeabi-cortexm0/*.a

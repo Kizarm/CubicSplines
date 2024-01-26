@@ -1,5 +1,5 @@
 # stm32f051 | unix
-TARGET?= stm32f051
+TARGET?= stm32l4x2
 # clang | gcc
 TOOL  ?= clang
 

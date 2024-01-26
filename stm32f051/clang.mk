@@ -15,13 +15,13 @@ COPY = llvm-objcopy
 CCPU   = -mcpu=cortex-m0
 MCPU   = -mthumb $(CCPU)
 TRIP   = thumbv6-none-eabi
-CFLAGS+= -Oz -I./stm32f051
+CFLAGS+= -Oz -flto -I./stm32f051
 #CFLAGS+= -Wno-deprecated-volatile
 CFLAGS+= --target=$(TRIP) $(MCPU)
 LFLAGS+= --target=$(TRIP)
 #LFLAGS+= $(MCPU)
 #LFLAGS+= -nostartfiles
-LFLAGS+= -nostdlib
+LFLAGS+= -nostdlib -lto-O3
 LDLIBS+= -L./stm32f051 -T script.ld
 LDLIBS+= -L./libaeabi-cortexm0 -laeabi-cortexm0
 DFLAGS+= --triple=$(TRIP) $(CCPU)

@@ -2,7 +2,7 @@
 */
 
 /* Entry Point */
-ENTRY(Reset_Handler)
+ENTRY(Vectors)
 
 /* Generate a link error if heap and stack don't fit into RAM */
 _Min_Heap_Size  = 0; /* required amount of heap  */
