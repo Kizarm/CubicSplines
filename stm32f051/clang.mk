@@ -15,6 +15,7 @@ COPY = llvm-objcopy
 CCPU   = -mcpu=cortex-m0
 MCPU   = -mthumb $(CCPU)
 TRIP   = thumbv6-none-eabi
+EABILB = ./libaeabi-cortexm0/libaeabi-cortexm0.a
 CFLAGS+= -Oz -flto -I./stm32f051
 #CFLAGS+= -Wno-deprecated-volatile
 CFLAGS+= --target=$(TRIP) $(MCPU)

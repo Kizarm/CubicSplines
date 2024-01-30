@@ -11,6 +11,7 @@ CFLAGS+= -Os -I./stm32f051
 
 CCPU   = -mcpu=cortex-m0
 MCPU   = -mthumb $(CCPU)
+EABILB = ./libaeabi-cortexm0/libaeabi-cortexm0.a
 CFLAGS+= $(MCPU)
 LFLAGS+= $(MCPU)
 LFLAGS+= -nostartfiles

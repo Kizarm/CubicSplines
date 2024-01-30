@@ -6,6 +6,7 @@ TOOL  ?= clang
 PRJ    = example
 
 VPATH  = . ./common
+EABILB =
 BLD    = ./build/
 DFLAGS = -d
 LFLAGS = -Wl,-Map=$(@:%.elf=%.map),-gc-sections
@@ -24,13 +25,12 @@ include $(TARGET)/$(TOOL).mk
 BOBJS = $(addprefix $(BLD),$(OBJS))
 
 all: $(BLD) $(PRJ).elf
-lib:
-	git clone https://github.com/bobbl/libaeabi-cortexm0.git
-	cd libaeabi-cortexm0 && $(MAKE) all && $(DEL) -r .git/* *.o .gitignore && rmdir .git
 # ... atd.
 -include $(BLD)*.d
 # linker
-$(PRJ).elf: $(BOBJS)
+$(EABILB):
+	cd libaeabi-cortexm0 && $(MAKE) all && $(DEL) *.o
+$(PRJ).elf: $(BOBJS) $(EABILB)
 	-@echo [LD $(TOOL),$(TARGET)] $@
 	@$(LD) $(LFLAGS) -o $(PRJ).elf $(BOBJS) $(LDLIBS)
 	-@echo "size:"
