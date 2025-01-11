@@ -13,7 +13,7 @@ static const GpioAssocPort cPortTab[] = {
   {&GPIOD, RCC_AHBENR_GPIODEN},
   {&GPIOF, RCC_AHBENR_GPIOFEN},
 };
-GpioClass::GpioClass (GpioPortNum const port, const uint32_t no, const GPIOMode_TypeDef type) :
+GpioClass::GpioClass (GpioPortNum const port, const uint32_t no, const GPIOMode_TypeDef type) noexcept :
   io(cPortTab[port].portAdr), pos(1UL << no), num(no) {
   // Povol hodiny
   RCC.AHBENR.R |= cPortTab[port].clkMask;

@@ -14,6 +14,7 @@ TRIP   = thumbv7em-none-eabi
 CFLAGS+= -Oz -flto -I./stm32l4x2 -I./stm32l4x2/usb -DUSE_USB=1
 #CFLAGS+= -Wno-deprecated-volatile
 CFLAGS+= --target=$(TRIP) $(MCPU)
+LFLAGS+= -Wl,-Map=$(@:%.elf=%.map),-gc-sections
 LFLAGS+= --target=$(TRIP)
 #LFLAGS+= $(MCPU)
 #LFLAGS+= -nostartfiles

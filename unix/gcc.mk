@@ -9,5 +9,6 @@ DUMP = $(PREFIX)objdump
 COPY = $(PREFIX)objcopy
 CFLAGS+= -Os -I./unix
 
+LFLAGS+= -Wl,-Map=$(@:%.elf=%.map),-gc-sections
 LDLIBS+= -lpthread
 VPATH += ./unix

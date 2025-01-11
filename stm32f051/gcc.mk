@@ -13,6 +13,7 @@ CCPU   = -mcpu=cortex-m0
 MCPU   = -mthumb $(CCPU)
 EABILB = ./libaeabi-cortexm0/libaeabi-cortexm0.a
 CFLAGS+= $(MCPU)
+LFLAGS+= -Wl,-Map=$(@:%.elf=%.map),-gc-sections
 LFLAGS+= $(MCPU)
 LFLAGS+= -nostartfiles
 LDLIBS+= -L./stm32f051 -T script.ld

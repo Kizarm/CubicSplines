@@ -1,5 +1,6 @@
 # stm32f051 | unix
-TARGET?= stm32l4x2
+#TARGET?= stm32l4x2
+TARGET?= ch32v203
 # clang | gcc
 TOOL  ?= clang
 
@@ -9,7 +10,8 @@ VPATH  = . ./common
 EABILB =
 BLD    = ./build/
 DFLAGS = -d
-LFLAGS = -Wl,-Map=$(@:%.elf=%.map),-gc-sections
+LFLAGS =
+#LFLAGS = -Wl,-Map=$(@:%.elf=%.map),-gc-sections
 LDLIBS =
 BFLAGS = --strip-unneeded
 
@@ -21,10 +23,9 @@ DEL    = rm -f
 OBJS   = main.o ledblinkingtest.o print.o hardwareoutput.o
 #OBJS  +=
 
+all: $(BLD) $(PRJ).elf
 include $(TARGET)/$(TOOL).mk
 BOBJS = $(addprefix $(BLD),$(OBJS))
-
-all: $(BLD) $(PRJ).elf
 # ... atd.
 -include $(BLD)*.d
 # linker
@@ -45,10 +46,10 @@ $(BLD)%.o: %.c
 	@$(CC) -c $(CFLAGS) $< -o $@
 $(BLD)%.o: %.cpp
 	-@echo [CX $(TOOL),$(TARGET)] $@
-	@$(CXX) -std=c++14 -fno-rtti -c $(CFLAGS) $< -o $@
+	@$(CXX) -std=c++17 -fno-rtti -c $(CFLAGS) $< -o $@
 $(BLD):
 	mkdir $(BLD)
 # vycisti
 clean:
 	$(DEL) $(BLD)* *.lst *.bin *.elf *.map *~
-.PHONY: all clean lib
+.PHONY: all clean lib flash

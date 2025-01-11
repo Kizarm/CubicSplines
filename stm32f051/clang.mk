@@ -19,6 +19,7 @@ EABILB = ./libaeabi-cortexm0/libaeabi-cortexm0.a
 CFLAGS+= -Oz -flto -I./stm32f051
 #CFLAGS+= -Wno-deprecated-volatile
 CFLAGS+= --target=$(TRIP) $(MCPU)
+LFLAGS+= -Wl,-Map=$(@:%.elf=%.map),-gc-sections
 LFLAGS+= --target=$(TRIP)
 #LFLAGS+= $(MCPU)
 #LFLAGS+= -nostartfiles

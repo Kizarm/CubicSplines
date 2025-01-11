@@ -8,6 +8,7 @@ DUMP = llvm-objdump
 COPY = llvm-objcopy
 
 CFLAGS+= -Oz -I./unix
+LFLAGS+= -Wl,-Map=$(@:%.elf=%.map),-gc-sections
 LDLIBS+= -lpthread
 VPATH += ./unix
 #OBJS +=

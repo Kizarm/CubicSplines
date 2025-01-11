@@ -12,6 +12,7 @@ CFLAGS+= -Os -I./stm32l4x2 -I./stm32l4x2/usb -DUSE_USB=1
 CCPU   = -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -fno-short-enums
 MCPU   = -mthumb $(CCPU)
 CFLAGS+= $(MCPU)
+LFLAGS+= -Wl,-Map=$(@:%.elf=%.map),-gc-sections
 LFLAGS+= $(MCPU)
 LFLAGS+= -nostartfiles
 LDLIBS+= -L./stm32l4x2 -T script.ld
